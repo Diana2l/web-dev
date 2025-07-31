@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'config/dbConnect.php';
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

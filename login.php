@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'config/dbConnect.php';
 session_start();
 
 $message = "";
