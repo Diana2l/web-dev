@@ -17,18 +17,15 @@ try {
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'bbitalex@gmail.com';                     //SMTP username
+    $mail->Username   = 'lc.diana.k@gmail.com';                     //SMTP username
     $mail->Password   = 'lbxd hxbb sgde aknq';                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('bbitalex@gmail.com', 'Alex Okama');
-    $mail->addAddress('benjamin.mundama@strathmore.edu', 'Benjamin Mundama');     //Add a recipient
-    // $mail->addAddress('ellen@example.com');               //Name is optional
-    // $mail->addReplyTo('info@example.com', 'Information');
-    // $mail->addCC('cc@example.com');
-    // $mail->addBCC('bcc@example.com');
+    $mail->setFrom('lc.diana.k@gmail.com', 'Diana Cheptoo');
+    $mail->addAddress('diana.cheptoo@strathmore.edu', 'Diana Cheptoo');     //Add a recipient
+    
 
     //Attachments
     // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -37,7 +34,7 @@ try {
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Implementing signup and signin forms';
-    $mail->Body    = 'Hi Benja, I am just testing something here <b>in bold!</b>';
+    $mail->Body    = 'Hi Diana, I am just testing something here <b>in bold!</b>';
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
