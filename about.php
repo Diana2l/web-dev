@@ -1,6 +1,6 @@
 
 <?php
-    require 'config/dbConnect.php';
+    require 'dbConnect.php';
     require 'includes/header.php';
     require 'includes/nav.php';
     require 'includes/footer.php';
