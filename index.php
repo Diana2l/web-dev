@@ -1,90 +1,135 @@
 <?php
-    require 'config/dbConnect.php';
-    require 'includes/header.php';
-    require 'includes/nav.php';
-    require 'includes/footer.php';
+include 'dbConnect.php';
+include 'includes/header.php';
+include 'includes/nav.php';
+include 'includes/footer.php';
+
+
+$product_count = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_assoc()['count'];
+$order_count = $conn->query("SELECT COUNT(*) as count FROM orders WHERE status = 'pending'")->fetch_assoc()['count'];
+$supplier_count = $conn->query("SELECT COUNT(*) as count FROM suppliers")->fetch_assoc()['count'];
+$low_stock_count = $conn->query("SELECT COUNT(*) as count FROM products WHERE quantity < 10")->fetch_assoc()['count'];
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register & Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --accent: #3498db;
+      --bg: #f4f6f8;
+      --card-bg: #fff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .container {
+      padding: 32px;
+    }
+
+    h1 {
+      color: var(--primary);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container" id="signup" style="display:none;">
-      <h1 class="form-title">Register</h1>
-      <form method="post" action="register.php">
-        <div class="input-group">
-           <i class="fas fa-user"></i>
-           <input type="text" name="fName" id="fName" placeholder="First Name" required>
-           <label for="fname">First Name</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text" name="lName" id="lName" placeholder="Last Name" required>
-            <label for="lName">Last Name</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email" name="email" id="email" placeholder="Email" required>
-            <label for="email">Email</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <label for="password">Password</label>
-        </div>
-       <input type="submit" class="btn" value="Sign Up" name="signUp">
-      </form>
-      <p class="or">
-        ----------or--------
-      </p>
-      <div class="icons">
-        <i class="fab fa-google"></i>
-        <i class="fab fa-facebook"></i>
+  <header>
+    <div><strong>InventoryPro</strong></div>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#">Products</a>
+      <a href="#">About</a>
+      <a href="#">Orders</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Welcome, Admin</h1>
+    <p>Overview of your inventory system:</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3><?= $product_count ?></h3>
+        <p>Products in Stock</p>
       </div>
-      <div class="links">
-        <p>Already Have Account ?</p>
-        <button id="signInButton">Sign In</button>
+      <div class="card">
+        <h3><?= $order_count ?></h3>
+        <p>Pending Orders</p>
+      </div>
+      <div class="card">
+        <h3><?= $supplier_count ?></h3>
+        <p>Suppliers</p>
+      </div>
+      <div class="card">
+        <h3><?= $low_stock_count ?></h3>
+        <p>Low Stock Alerts</p>
       </div>
     </div>
+  </div>
 
-    <div class="container" id="signIn">
-        <h1 class="form-title">Sign In</h1>
-        <form method="post" action="register.php">
-          <div class="input-group">
-              <i class="fas fa-envelope"></i>
-              <input type="email" name="email" id="email" placeholder="Email" required>
-              <label for="email">Email</label>
-          </div>
-          <div class="input-group">
-              <i class="fas fa-lock"></i>
-              <input type="password" name="password" id="password" placeholder="Password" required>
-              <label for="password">Password</label>
-          </div>
-          <p class="recover">
-            <a href="#">Recover Password</a>
-          </p>
-         <input type="submit" class="btn" value="Sign In" name="signIn">
-        </form>
-        <p class="or">
-          ----------or--------
-        </p>
-        <div class="icons">
-          <i class="fab fa-google"></i>
-          <i class="fab fa-facebook"></i>
-        </div>
-        <div class="links">
-          <p>Don't have account yet?</p>
-          <button id="signUpButton">Sign Up</button>
-        </div>
-      </div>
-      <script src="script.js"></script>
+  <footer>
+    &copy; 2025 InventoryPro. All rights reserved.
+  </footer>
 </body>
 </html>
